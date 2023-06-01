@@ -7,6 +7,13 @@ fn main() {
     // 괄호를 제거하면 결과값이 -4가된다.. 메서드 호출은 단항 전위 연산자보다 우선순위가 높음.
     println!("{}", (-4_i32).abs());
     println!("{}", i32::abs(-4));
+
+    // C나 C++와 달리 러스트는 암묵적으로 수치 변환을 수행하는 경우가 거의 없다.
+    // 하지만 i as f64나 x as i32 처럼 as 연산자를 쓰면 언제든지 명시적(explicit)인 변환을 사용할 수 있다.
+    // 2.0_f64 처럼 snake를 붙여 작성할 수 도 있고 2.0f64처럼 붙여도 된다. 나는 스네이크를 추가하는게 좋은듯.
+    println!("{}", (2.0_f64).sqrt());
+    println!("{}", (2.0f64).sqrt());
+    println!("{}", f64::sqrt(2.0));
 }
 
 #[test]
@@ -102,4 +109,23 @@ fn overflowing() {
     // `u16`을 대상으로 하는 17비트 자리 이동은 거리가 타입 자체의 비트 크기를 넘어선다.
     // 따라서 17을 16으로 나눈 나머지인 1이 실제로 적용되는 자리 이동 거리다.
     assert_eq!(5_u16.overflowing_shl(17), (10, true));
+}
+
+/* 부동 소숫점 */
+#[test]
+fn test_f32_f64() {
+    assert!((-1. / f32::INFINITY).is_sign_negative());
+    assert_eq!(-f32::MIN == f32::MAX);
+
+    assert_eq!(5f32.sqrt() * 4f32.sqrt(), 5.);
+    assert_eq!((-1.01f64).floor(), -2.0); // 기준값 보다 작지만 가장 큰 정수 반환
+}
+
+/* bool 타입 */
+#[test]
+fn test_bool() {
+    // 러스트의 as 연산자는 bool 값을 정수 타입으로 변환할 수 있다.
+    // 하지만 그 반대방향(수치 타입 -> bool)은 불가능하다.
+    assert_eq!(false as i32, 0);
+    assert_eq!(true as i32, 1);
 }
