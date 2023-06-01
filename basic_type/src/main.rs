@@ -50,7 +50,7 @@ fn panic_overflow2() {
 
 
 /* 정수 산술 메서드는 크게 네 가지 범주로 나뉜다. */
-// 점검(checked): 결과를 Option에 담하 반환한다. Some(v) 또는 None을 반환한다.
+// 점검(checked): 결과를 Option에 담아 반환한다. Some(v) 또는 None을 반환한다.
 #[test]
 fn checked() {
     // 10과 20의 합은 u8로 표현할 수 있다.
@@ -86,14 +86,14 @@ fn wrapping() {
     assert_eq!(0b0101_i16.wrapping_shr(1), 0b0010_i16);     // 간단한 비트 쉬프트 연산
 }
 
-// 포화(saturating): 표현할 수 있는 값 내에서 수학적으로 옳은 결과게 가장 가까운 값을 반환한다.
+// 포화(saturating): 표현할 수 있는 값 내에서 수학적으로 옳은 결과에 가장 가까운 값을 반환한다.
 #[test]
 fn saturating() {
     assert_eq!(32760_i16.saturating_add(10), 32767);
     assert_eq!((-32760_i16).saturating_sub(10), -32768);
 }
 
-// 넘짐(overflowing): (result, overflowed)튜플을 반환한다.
+// 넘침(overflowing): (result, overflowed)튜플을 반환한다.
 #[test]
 fn overflowing() {
     assert_eq!(255_u8.overflowing_sub(2), (253, false));
